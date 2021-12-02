@@ -6,7 +6,7 @@
 /*   By: chaidel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 16:47:18 by chaidel           #+#    #+#             */
-/*   Updated: 2021/12/01 17:52:27 by chaidel          ###   ########.fr       */
+/*   Updated: 2021/12/02 12:12:14 by chaidel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,6 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char    *ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char    *sub;
-	size_t  i;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	if ((size_t)start >= ft_strlen(s))
-		len = 0;
-	else if ((size_t)len > ft_strlen(s))
-		len = ft_strlen(s);
-	sub = malloc(sizeof(char) * (len + 1));
-	if (!sub)
-		return (NULL);
-	while (i < len)
-	{
-		sub[i] = s[start + i];
-		i++;
-	}
-	sub[i] = '\0';
-	return (sub);
-}
-
 char    *ft_strchr(const char *s, int c)
 {
 	while (*s)
@@ -59,38 +35,39 @@ char    *ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strcat(char *dest, const char *src)
+char    *ft_strjoin(char *rest, char const *brut)
 {
-	int i;
-	int n;
+	char	*one;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
-	n = 0;
-	while (dest[n])
-		n++;
-	while (src[i])
+	j = 0;
+	if (!brut)
+		return (NULL);
+	if (!rest)
 	{
-		dest[n + i] = src[i];
-		i++;
+		rest = (char *)malloc(sizeof(char));
+		if (!rest)
+			return (NULL);
+		rest[0] = '\0';
 	}
-	dest[n + i] = '\0';
-	return (dest);
-}
-
-char    *ft_strjoin(char const *s1, char const *s2)
-{
-	char    *str;
-	size_t  len1;
-	size_t  len2;
-
-	if (!s1 || !s2)
+	one = (char *)malloc(sizeof(char) * (ft_strlen(rest) + ft_strlen(brut) + 1));
+	if (!one)
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	str = malloc(sizeof(char) * (len1 + len2 + 1));
-	if (!str)
-		return (NULL);
-	ft_strcat(str, s1);
-	ft_strcat(str, s2);
-	return (str);
+	if (rest)
+		while (rest[i])
+		{
+			one[i] = rest[i];
+			i++;
+		}
+	while (brut[j])
+	{
+		one[i] = brut[j];
+		i++;
+		j++;
+	}
+	one[i] = '\0';
+	free(rest);
+	return (one);
 }
