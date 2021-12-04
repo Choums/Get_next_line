@@ -6,7 +6,7 @@
 /*   By: chaidel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 15:20:38 by chaidel           #+#    #+#             */
-/*   Updated: 2021/12/02 13:42:51 by chaidel          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:23:56 by chaidel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h> /* A RETIRER */
-# include <stdio.h> /* A RETIRER */
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 42 
 # endif
 
 char	*get_next_line(int fd);

@@ -6,7 +6,7 @@
 /*   By: chaidel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 17:12:28 by chaidel           #+#    #+#             */
-/*   Updated: 2021/12/02 16:48:43 by chaidel          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:32:44 by chaidel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_extract(int fd, char *rest)
 	brut = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!brut)
 		return (NULL);
-	while (!ft_strchr(brut, '\n') && ret)
+	while (!ft_strchr(rest, '\n') && ret)
 	{
 		ret = read(fd, brut, BUFFER_SIZE);
 		if (ret == -1)
@@ -31,11 +31,6 @@ char	*ft_extract(int fd, char *rest)
 		}
 		brut[ret] = '\0';
 		rest = ft_strjoin(rest, brut);
-		if (!rest)
-		{
-			free(brut);
-			return (NULL);
-		}
 	}
 	free(brut);
 	return (rest);
@@ -77,21 +72,17 @@ char	*ft_cut(char *rest)
 	pos = 0;
 	while (rest[pos] != '\n' && rest[pos])
 		pos++;
-	if (!rest)
+	if (!rest[pos])
 	{
 		free(rest);
 		return (NULL);
 	}
-	pos++;
 	cut = (char *)malloc(sizeof(char) * (ft_strlen(rest) - pos + 1));
 	if (!rest)
 		return (NULL);
+	pos++;
 	while (rest[pos])
-	{
-		cut[i] = rest[pos];
-		i++;
-		pos++;
-	}
+		cut[i++] = rest[pos++];
 	cut[i] = '\0';
 	free(rest);
 	return (cut);
@@ -99,27 +90,15 @@ char	*ft_cut(char *rest)
 
 char	*get_next_line(int fd)
 {
-	static 	char	*rest;
-	char			*line;
+	static char	*rest;
+	char		*line;
 
-	if (fd <= 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	rest = ft_extract(fd, rest);	
+	rest = ft_extract(fd, rest);
 	if (!rest)
 		return (NULL);
 	line = ft_get_line(rest);
-	if (!line)
-		return (NULL);
 	rest = ft_cut(rest);
 	return (line);
 }
-/*
-int main(void)
-{
-	int fd;
-
-	fd = open("file.txt", O_RDONLY);
-	char *str = get_next_line(fd);
-	printf("final line : |%s|", str);	
-	return (0);
-}*/
