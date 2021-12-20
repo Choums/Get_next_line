@@ -78,7 +78,7 @@ char	*ft_cut(char *rest)
 		return (NULL);
 	}
 	cut = (char *)malloc(sizeof(char) * (ft_strlen(rest) - pos + 1));
-	if (!rest)
+	if (!cut)
 		return (NULL);
 	pos++;
 	while (rest[pos])
